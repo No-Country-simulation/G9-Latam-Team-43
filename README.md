@@ -176,6 +176,65 @@ Todos los equipos trabajarán sobre contratos de integración previamente defini
 | **Backend** | Sergio Ceballos, David De La Cruz, Mauricio Rojas, Flor Humpiri           |
 | **Frontend y UX/UI** | Por definir  |
 
+----
 
+# Entrenamiento del Modelo  (Propuesta a revisar) 
 
+# Entrenamiento del Modelo
 
+## Preprocesamiento de Datos
+
+Antes del entrenamiento, los textos son preparados mediante las siguientes etapas:
+
+- Limpieza de texto.
+- Tokenización.
+- Eliminación de stopwords.
+- Lematización o normalización lingüística.
+
+## Modelado
+
+### Modelo Base Propuesto
+
+Para el MVP se propone una solución simple, explicable y de rápida implementación:
+
+- TF-IDF (Term Frequency - Inverse Document Frequency) para representación vectorial de los textos.
+- Regresión Logística (Logistic Regression) para clasificación de contenidos.
+
+### Modelos Alternativos
+
+Según el tiempo disponible y los resultados obtenidos, se pueden evaluar otras técnicas:
+
+- Random Forest
+- XGBoost
+- Naive Bayes
+- Support Vector Machines (SVM)
+- Agrupamiento mediante K-Means
+- Análisis de Similaridad Coseno
+
+## Evaluación del Modelo
+
+El desempeño será medido mediante métricas estándar de clasificación:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+
+### Resultados de Referencia
+
+| Métrica | Valor |
+|----------|--------|
+| Accuracy | 0.91 |
+| Precision | 0.89 |
+| Recall | 0.88 |
+| F1 Score | 0.88 |
+
+## Entregables de Data Science
+
+- Exploración y análisis de datos (EDA).
+- Preparación y limpieza del corpus documental.
+- Extracción de características textuales.
+- Entrenamiento y evaluación del modelo.
+- Generación de métricas de desempeño.
+- Serialización del modelo (Joblib/Pickle).
+- Documentación de resultados y conclusiones.
