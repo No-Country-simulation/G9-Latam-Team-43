@@ -172,7 +172,7 @@ Todos los equipos trabajarán sobre contratos de integración previamente defini
 
 | Área | Integrantes |
 |--------|------------|
-| **Data Science e IA** | Jose Velasquez, Meslisa Lopez, Miguel Tapiero, Ruben Hidalgo    |
+| **Data Science e IA** | Jose Velasquez, Melissa Lopez, Miguel Tapiero, Ruben Hidalgo    |
 | **Backend** | Sergio Ceballos, David De La Cruz, Mauricio Rojas, Flor Humpiri           |
 | **Frontend y UX/UI** | Por definir  |
 
