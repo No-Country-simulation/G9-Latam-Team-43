@@ -65,7 +65,7 @@ TechMind automatiza esta tarea mediante técnicas de Machine Learning y NLP.
 | David De La Cruz             | Backend Developer       |
 | Mauricio Rojas               | Backend Developer       |
 | Ruben Hidalgo                | Project Manager         |
-| Jose Velasquez               | Data Analyst            |
+| Jose Ernesto Velasquez       | Data Analyst            |
 | Melissa Lopez                | Data Analyst            |
 | Miguel Tapiero               | Data Scientist          |
 | Flor Humpiri                 | Backend Developer       |
