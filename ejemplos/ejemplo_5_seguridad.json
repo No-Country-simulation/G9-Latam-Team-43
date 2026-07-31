@@ -1,0 +1,5 @@
+{
+  "titulo": "Prevención de inyección SQL",
+  "texto": "Material de referencia sobre la prevención de inyección SQL: consultas parametrizadas, validación de entrada, uso de ORM y pruebas de seguridad basadas en el OWASP Top 10.",
+  "guardar": false
+}

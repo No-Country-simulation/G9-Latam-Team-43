@@ -1,0 +1,4 @@
+{
+  "titulo": "Análisis exploratorio con pandas",
+  "texto": "Apuntes del curso: limpieza de datos con pandas, visualización de distribuciones con matplotlib y entrenamiento de una regresión logística con scikit-learn para clasificar textos con TF-IDF."
+}

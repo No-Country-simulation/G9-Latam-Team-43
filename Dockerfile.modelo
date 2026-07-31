@@ -1,0 +1,30 @@
+# Servicio de modelo (FastAPI + scikit-learn). El dataset se genera y el
+# modelo se entrena durante la construcción de la imagen, así el contenedor
+# arranca listo para servir.
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Compatibilidad con CPUs x86-64 antiguas o virtualizadas (qemu64/kvm64):
+# - requirements.txt fija numpy<2.4 (desde 2.4 las ruedas exigen x86-64-v2).
+# - OPENBLAS_CORETYPE=PRESCOTT fuerza kernels BLAS portables (SSE3): la
+#   autodetección puede caer en kernels Nehalem/Barcelona (SSE4.x) y matar el
+#   proceso con "Illegal instruction". En otras arquitecturas se ignora.
+# PYTHONUNBUFFERED muestra la salida del entrenamiento en vivo durante el build.
+ENV OPENBLAS_CORETYPE=PRESCOTT \
+    PYTHONUNBUFFERED=1
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ciencia_datos/ ciencia_datos/
+COPY servicio_modelo/ servicio_modelo/
+
+RUN python -m ciencia_datos.generar_dataset && python -m ciencia_datos.entrenar
+
+EXPOSE 8001
+
+HEALTHCHECK --interval=10s --timeout=3s --retries=12 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8001/salud')"
+
+CMD ["uvicorn", "servicio_modelo.main:app", "--host", "0.0.0.0", "--port", "8001"]

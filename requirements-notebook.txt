@@ -1,0 +1,8 @@
+# Dependencias extra solo para ejecutar el notebook de ciencia de datos
+jupyter
+nbconvert
+ipykernel
+matplotlib>=3.8
+# Repetimos el techo de numpy (ver requirements.txt) para que esta instalación
+# adicional no lo suba a una versión que exige CPUs x86-64-v2.
+numpy>=1.26,<2.4

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tecnoteca · Organizador inteligente de contenido técnico</title>
+<style>
+  :root {
+    --fondo: #0f1420; --panel: #171e2e; --panel2: #1d2639; --borde: #2a3550;
+    --texto: #e8ecf5; --texto2: #93a0b8; --acento: #5b8def; --acento2: #37c99e;
+    --error: #e06c75; --radio: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--fondo); color: var(--texto); min-height: 100vh;
+  }
+  header {
+    padding: 28px 24px 20px; text-align: center;
+    background: linear-gradient(135deg, #14203a 0%, #0f1420 70%);
+    border-bottom: 1px solid var(--borde);
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: .5px; }
+  header h1 span { color: var(--acento); }
+  header p { color: var(--texto2); margin-top: 6px; font-size: .95rem; }
+  nav { display: flex; justify-content: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  nav button {
+    background: var(--panel); color: var(--texto2); border: 1px solid var(--borde);
+    padding: 8px 18px; border-radius: 999px; cursor: pointer; font-size: .95rem;
+  }
+  nav button.activa { background: var(--acento); border-color: var(--acento); color: #fff; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+  section { display: none; }
+  section.visible { display: block; }
+  .tarjeta {
+    background: var(--panel); border: 1px solid var(--borde);
+    border-radius: var(--radio); padding: 20px; margin-bottom: 16px;
+  }
+  label { display: block; color: var(--texto2); font-size: .85rem; margin: 12px 0 4px; }
+  input[type=file] {
+    width: 100%; background: var(--panel2); color: var(--texto2);
+    border: 1px dashed var(--borde); border-radius: 8px; padding: 10px 12px;
+    font-size: .9rem;
+  }
+  code { background: var(--panel2); padding: 1px 6px; border-radius: 4px; font-size: .85em; }
+  input[type=text], textarea, select {
+    width: 100%; background: var(--panel2); color: var(--texto);
+    border: 1px solid var(--borde); border-radius: 8px; padding: 10px 12px;
+    font-size: .95rem; font-family: inherit;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .fila { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+  .boton {
+    background: var(--acento); color: #fff; border: 0; border-radius: 8px;
+    padding: 10px 22px; font-size: .95rem; cursor: pointer;
+  }
+  .boton:disabled { opacity: .5; cursor: wait; }
+  .boton.secundario { background: var(--panel2); border: 1px solid var(--borde); color: var(--texto); }
+  .aviso { color: var(--error); margin-top: 10px; font-size: .9rem; white-space: pre-wrap; }
+  .insignia {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; color: #fff;
+  }
+  .chip {
+    display: inline-block; background: var(--panel2); border: 1px solid var(--borde);
+    color: var(--texto); border-radius: 999px; padding: 3px 11px; font-size: .82rem;
+    margin: 3px 4px 0 0;
+  }
+  .barra { background: var(--panel2); border-radius: 999px; height: 10px; overflow: hidden; margin-top: 8px; }
+  .barra > div { height: 100%; background: var(--acento2); }
+  .sutil { color: var(--texto2); font-size: .85rem; }
+  .item {
+    border: 1px solid var(--borde); border-radius: var(--radio);
+    padding: 14px 16px; margin-bottom: 10px; background: var(--panel);
+    cursor: pointer; transition: border-color .15s;
+  }
+  .item:hover { border-color: var(--acento); }
+  .item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .item .texto-doc { color: var(--texto2); font-size: .88rem; margin-top: 8px; display: none; }
+  .item.abierto .texto-doc { display: block; }
+  h2 { font-size: 1.15rem; margin-bottom: 12px; }
+  .categorias-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .categorias-chips button {
+    background: var(--panel); border: 1px solid var(--borde); color: var(--texto);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: .88rem;
+  }
+  .categorias-chips button.activa { background: var(--acento2); border-color: var(--acento2); color: #06281e; font-weight: 600; }
+  footer { text-align: center; color: var(--texto2); font-size: .85rem; padding: 20px; border-top: 1px solid var(--borde); }
+  footer a { color: var(--acento); text-decoration: none; }
+  @media (max-width: 600px) { header h1 { font-size: 1.3rem; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Tecno<span>teca</span></h1>
+  <p>Organizador inteligente de contenido técnico · Hackathon ONE G9 (Alura + Oracle)</p>
+  <nav>
+    <button data-vista="analizar" class="activa">Analizar</button>
+    <button data-vista="buscar">Buscar</button>
+    <button data-vista="explorar">Explorar</button>
+    <button data-vista="lote">Lote CSV</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ── Analizar ── -->
+  <section id="vista-analizar" class="visible">
+    <div class="tarjeta">
+      <h2>Analizar un contenido técnico</h2>
+      <p class="sutil">El modelo lo clasifica, extrae palabras clave, detecta el tema y sugiere contenidos relacionados.</p>
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" placeholder="Introducción a Spring Boot" maxlength="300">
+      <label for="texto">Texto</label>
+      <textarea id="texto" placeholder="En este contenido se presentan los conceptos básicos para la creación de APIs REST utilizando Java y Spring Boot."></textarea>
+      <div class="fila">
+        <label style="margin:0; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="guardar" checked> Guardar en la base de conocimiento
+        </label>
+        <button class="boton" id="boton-analizar">Analizar</button>
+        <button class="boton secundario" id="boton-ejemplo">Usar ejemplo</button>
+      </div>
+      <div class="aviso" id="error-analizar"></div>
+    </div>
+    <div class="tarjeta" id="resultado" style="display:none"></div>
+  </section>
+
+  <!-- ── Buscar ── -->
+  <section id="vista-buscar">
+    <div class="tarjeta">
+      <h2>Búsqueda semántica</h2>
+      <label for="consulta">¿Qué estás buscando?</label>
+      <input type="text" id="consulta" placeholder="autenticación con tokens en una API">
+      <label for="filtro-categoria">Categoría (opcional)</label>
+      <select id="filtro-categoria"><option value="">Todas</option></select>
+      <div class="fila"><button class="boton" id="boton-buscar">Buscar</button></div>
+      <div class="aviso" id="error-buscar"></div>
+    </div>
+    <div id="resultados-busqueda"></div>
+  </section>
+
+  <!-- ── Explorar ── -->
+  <section id="vista-explorar">
+    <div class="tarjeta">
+      <h2>Base de conocimiento</h2>
+      <p class="sutil">Contenidos clasificados automáticamente. Haz clic en una categoría para filtrar y en un contenido para ver su texto y relacionados.</p>
+    </div>
+    <div class="categorias-chips" id="chips-categorias"></div>
+    <div id="lista-contenidos"></div>
+  </section>
+
+  <!-- ── Lote CSV ── -->
+  <section id="vista-lote">
+    <div class="tarjeta">
+      <h2>Procesamiento por lotes (CSV)</h2>
+      <p class="sutil">Sube un CSV con columnas <code>titulo</code> y <code>texto</code>
+        (máximo 200 filas). Cada fila se clasifica y, si lo deseas, se guarda en la base
+        de conocimiento.</p>
+      <label for="archivo-csv">Archivo CSV</label>
+      <input type="file" id="archivo-csv" accept=".csv,text/csv">
+      <div class="fila">
+        <label style="margin:0; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="guardar-lote" checked> Guardar en la base de conocimiento
+        </label>
+        <button class="boton" id="boton-lote">Procesar lote</button>
+      </div>
+      <div class="aviso" id="error-lote"></div>
+    </div>
+    <div id="resultado-lote"></div>
+  </section>
+</main>
+
+<footer>
+  API pública: <a href="/swagger-ui.html">Swagger</a> · <a href="/salud">/salud</a> ·
+  Modelo de ciencia de datos: TF-IDF + Regresión Logística + K-Means
+  <div id="estado-sistema" class="sutil" style="margin-top:6px">cargando estado…</div>
+</footer>
+
+<script>
+const COLORES = {
+  "Backend": "#5b8def", "Frontend": "#b57bee", "Ciencia de Datos": "#37c99e",
+  "DevOps": "#e0a458", "Bases de Datos": "#4fb3d9", "Seguridad": "#e06c75",
+  "Móvil": "#7ec96e", "Cloud": "#d97fb0"
+};
+const $ = id => document.getElementById(id);
+const esc = t => { const d = document.createElement("div"); d.textContent = t ?? ""; return d.innerHTML; };
+const color = c => COLORES[c] || "#5b8def";
+
+async function pedir(ruta, opciones) {
+  const respuesta = await fetch(ruta, opciones);
+  const cuerpo = await respuesta.json().catch(() => ({}));
+  if (!respuesta.ok) {
+    const detalles = (cuerpo.detalles || []).map(d => `\n· ${d.campo}: ${d.mensaje}`).join("");
+    throw new Error((cuerpo.error || `Error ${respuesta.status}`) + detalles);
+  }
+  return cuerpo;
+}
+
+// ── Navegación ──
+document.querySelectorAll("nav button").forEach(boton => {
+  boton.onclick = () => {
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("activa"));
+    document.querySelectorAll("main section").forEach(s => s.classList.remove("visible"));
+    boton.classList.add("activa");
+    $("vista-" + boton.dataset.vista).classList.add("visible");
+    if (boton.dataset.vista === "explorar") cargarExploracion();
+    if (boton.dataset.vista === "buscar") cargarCategoriasEnFiltro();
+  };
+});
+
+// ── Analizar ──
+$("boton-ejemplo").onclick = () => {
+  $("titulo").value = "Introducción a Spring Boot";
+  $("texto").value = "En este contenido se presentan los conceptos básicos para la creación de APIs REST utilizando Java y Spring Boot.";
+};
+$("boton-analizar").onclick = async () => {
+  $("error-analizar").textContent = "";
+  $("resultado").style.display = "none";
+  $("boton-analizar").disabled = true;
+  try {
+    const r = await pedir("/contenido", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        titulo: $("titulo").value, texto: $("texto").value,
+        guardar: $("guardar").checked
+      })
+    });
+    mostrarResultado(r);
+  } catch (e) {
+    $("error-analizar").textContent = e.message;
+  } finally {
+    $("boton-analizar").disabled = false;
+  }
+};
+
+function mostrarResultado(r) {
+  const porcentaje = Math.round((r.probabilidad || 0) * 100);
+  const chips = (r.informacion_adicional || []).map(p => `<span class="chip">${esc(p)}</span>`).join("");
+  const explicacion = (r.explicacion || []).map(e =>
+    `<span class="chip" title="peso ${e.peso}">${esc(e.termino)} · ${e.peso}</span>`).join("");
+  const relacionados = (r.relacionados || []).map(x =>
+    `<div class="item" onclick="verDetalle(${x.id})"><h3>${esc(x.titulo)}</h3>
+     <span class="insignia" style="background:${color(x.categoria)}">${esc(x.categoria)}</span>
+     <span class="sutil"> similitud ${(x.similitud * 100).toFixed(0)}%</span></div>`).join("");
+  $("resultado").innerHTML = `
+    <h2>Resultado</h2>
+    <p><span class="insignia" style="background:${color(r.categoria)}">${esc(r.categoria)}</span>
+       <span class="sutil"> probabilidad ${porcentaje}%</span>
+       ${r.id ? `<span class="sutil"> · guardado con id ${r.id}</span>` : ""}</p>
+    <div class="barra"><div style="width:${porcentaje}%"></div></div>
+    <label>Información adicional (palabras clave)</label><div>${chips || '<span class="sutil">—</span>'}</div>
+    ${r.tema && r.tema.etiqueta ? `<label>Tema detectado (K-Means)</label><div class="sutil">grupo ${r.tema.id}: ${esc(r.tema.etiqueta)}</div>` : ""}
+    <label>¿Por qué esta categoría? (términos con más peso)</label><div>${explicacion || '<span class="sutil">—</span>'}</div>
+    ${relacionados ? `<label>Contenidos relacionados</label>${relacionados}` : ""}`;
+  $("resultado").style.display = "block";
+}
+
+// ── Buscar ──
+async function cargarCategoriasEnFiltro() {
+  try {
+    const categorias = await pedir("/categorias");
+    const selector = $("filtro-categoria");
+    const actual = selector.value;
+    selector.innerHTML = '<option value="">Todas</option>' + categorias.map(c =>
+      `<option value="${esc(c.categoria)}">${esc(c.categoria)} (${c.cantidad})</option>`).join("");
+    selector.value = actual;
+  } catch (e) { /* el filtro es opcional */ }
+}
+$("boton-buscar").onclick = async () => {
+  $("error-buscar").textContent = "";
+  $("resultados-busqueda").innerHTML = "";
+  try {
+    const parametros = new URLSearchParams({q: $("consulta").value, k: 8});
+    if ($("filtro-categoria").value) parametros.set("categoria", $("filtro-categoria").value);
+    const resultados = await pedir("/buscar?" + parametros);
+    $("resultados-busqueda").innerHTML = resultados.length
+      ? resultados.map(x => `
+        <div class="item" onclick="verDetalle(${x.id})">
+          <h3>${esc(x.titulo)}</h3>
+          <span class="insignia" style="background:${color(x.categoria)}">${esc(x.categoria)}</span>
+          <span class="sutil"> similitud ${(x.similitud * 100).toFixed(0)}%</span>
+          <div>${(x.informacion_adicional || []).slice(0, 5).map(p => `<span class="chip">${esc(p)}</span>`).join("")}</div>
+        </div>`).join("")
+      : '<div class="tarjeta sutil">Sin resultados para esa consulta.</div>';
+  } catch (e) {
+    $("error-buscar").textContent = e.message;
+  }
+};
+$("consulta").addEventListener("keydown", e => { if (e.key === "Enter") $("boton-buscar").click(); });
+
+// ── Explorar ──
+let categoriaActiva = "";
+async function cargarExploracion() {
+  try {
+    const categorias = await pedir("/categorias");
+    $("chips-categorias").innerHTML =
+      `<button class="${categoriaActiva ? "" : "activa"}" onclick="filtrarCategoria('')">Todas</button>` +
+      categorias.map(c => `<button class="${categoriaActiva === c.categoria ? "activa" : ""}"
+        onclick="filtrarCategoria('${esc(c.categoria)}')">${esc(c.categoria)} · ${c.cantidad}</button>`).join("");
+    const parametros = new URLSearchParams({limite: 30});
+    if (categoriaActiva) parametros.set("categoria", categoriaActiva);
+    const contenidos = await pedir("/contenidos?" + parametros);
+    $("lista-contenidos").innerHTML = contenidos.length
+      ? contenidos.map(c => `
+        <div class="item" onclick="verDetalle(${c.id})">
+          <h3>${esc(c.titulo)}</h3>
+          <span class="insignia" style="background:${color(c.categoria)}">${esc(c.categoria)}</span>
+          <span class="sutil"> ${c.probabilidad ? Math.round(c.probabilidad * 100) + "% · " : ""}origen: ${esc(c.origen || "?")}</span>
+          <div>${(c.informacion_adicional || []).slice(0, 5).map(p => `<span class="chip">${esc(p)}</span>`).join("")}</div>
+        </div>`).join("")
+      : '<div class="tarjeta sutil">Aún no hay contenidos en esta categoría.</div>';
+  } catch (e) {
+    $("lista-contenidos").innerHTML = `<div class="tarjeta aviso">${esc(e.message)}</div>`;
+  }
+}
+function filtrarCategoria(categoria) { categoriaActiva = categoria; cargarExploracion(); }
+
+// ── Lote CSV ──
+$("boton-lote").onclick = async () => {
+  $("error-lote").textContent = "";
+  $("resultado-lote").innerHTML = "";
+  const archivo = $("archivo-csv").files[0];
+  if (!archivo) { $("error-lote").textContent = "Selecciona un archivo CSV."; return; }
+  $("boton-lote").disabled = true;
+  try {
+    const datos = new FormData();
+    datos.append("archivo", archivo);
+    const r = await pedir(`/contenido/lote?guardar=${$("guardar-lote").checked}`,
+      {method: "POST", body: datos});
+    const filas = r.resultados.map(f => `
+      <div class="item" style="cursor:default">
+        <h3>${esc(f.titulo || ("fila " + f.fila))}</h3>
+        ${f.error
+          ? `<span class="sutil" style="color:var(--error)">fila ${f.fila}: ${esc(f.error)}</span>`
+          : `<span class="insignia" style="background:${color(f.categoria)}">${esc(f.categoria)}</span>
+             <span class="sutil"> ${Math.round((f.probabilidad || 0) * 100)}% · fila ${f.fila}</span>`}
+      </div>`).join("");
+    $("resultado-lote").innerHTML = `
+      <div class="tarjeta"><h2>Resultado del lote</h2>
+        <p class="sutil">${r.procesados} filas procesadas · ${r.errores} con error ·
+        ${r.guardado ? "guardadas en la base de conocimiento" : "sin guardar"}</p></div>${filas}`;
+  } catch (e) {
+    $("error-lote").textContent = e.message;
+  } finally {
+    $("boton-lote").disabled = false;
+  }
+};
+
+// ── Estado del sistema (pie de página) ──
+(async () => {
+  try {
+    const s = await pedir("/salud");
+    const modelo = s.modelo || {};
+    const oci = modelo.oci || {};
+    const textoOci = !oci.habilitado
+      ? "OCI: deshabilitado"
+      : `OCI${oci.auth === "local" ? " (emulador local)" : ""}: ${oci.conectado ? "conectado" : "sin conexión"} · bucket ${oci.bucket || "?"}`;
+    $("estado-sistema").textContent =
+      `modelo v${modelo.version_modelo || "?"} · ${s.contenidos} contenidos · ${textoOci}`;
+  } catch (e) {
+    $("estado-sistema").textContent = "No fue posible consultar /salud";
+  }
+})();
+
+async function verDetalle(id) {
+  try {
+    const [detalle, relacionados] = await Promise.all([
+      pedir(`/contenidos/${id}`), pedir(`/contenidos/${id}/relacionados?k=3`)
+    ]);
+    const chips = (detalle.informacion_adicional || []).map(p => `<span class="chip">${esc(p)}</span>`).join("");
+    const listaRelacionados = relacionados.map(x =>
+      `<div class="item" onclick="event.stopPropagation(); verDetalle(${x.id})"><h3>${esc(x.titulo)}</h3>
+       <span class="insignia" style="background:${color(x.categoria)}">${esc(x.categoria)}</span>
+       <span class="sutil"> similitud ${(x.similitud * 100).toFixed(0)}%</span></div>`).join("");
+    $("resultado").innerHTML = `
+      <h2>${esc(detalle.titulo)}</h2>
+      <p><span class="insignia" style="background:${color(detalle.categoria)}">${esc(detalle.categoria)}</span>
+         <span class="sutil"> id ${detalle.id} · tema: ${esc(detalle.tema || "—")}</span></p>
+      <p class="sutil" style="margin-top:10px">${esc(detalle.texto)}</p>
+      <label>Palabras clave</label><div>${chips || "—"}</div>
+      ${listaRelacionados ? `<label>Relacionados</label>${listaRelacionados}` : ""}`;
+    $("resultado").style.display = "block";
+    document.querySelectorAll("nav button")[0].click();
+    $("resultado").scrollIntoView({behavior: "smooth"});
+  } catch (e) { alert(e.message); }
+}
+</script>
+</body>
+</html>

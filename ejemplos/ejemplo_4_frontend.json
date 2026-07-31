@@ -1,0 +1,4 @@
+{
+  "titulo": "Componentes y hooks en React",
+  "texto": "Tutorial donde aprenderás a crear componentes reutilizables con React y TypeScript, manejar el estado con useState y useEffect, y aplicar estilos responsive con CSS Grid y Flexbox."
+}

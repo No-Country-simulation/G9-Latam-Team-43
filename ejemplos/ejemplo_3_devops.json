@@ -1,0 +1,4 @@
+{
+  "titulo": "Despliegue continuo con Docker y Kubernetes",
+  "texto": "Guía práctica para construir imágenes de Docker, publicarlas en un registro y desplegarlas en Kubernetes con un pipeline de CI/CD en GitHub Actions, incluyendo rollbacks y monitoreo con Prometheus."
+}

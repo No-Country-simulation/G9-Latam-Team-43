@@ -1,0 +1,22 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Artefactos generados (reproducibles con ./run.bash)
+data/*.csv
+data/tecnoteca-db*
+data/oci_local/
+models/*.joblib
+models/metricas.json
+logs/
+
+# Java / Maven
+api/target/
+
+# Sistema
+.DS_Store
+.DS_Store
+node_modules/
+.venv/

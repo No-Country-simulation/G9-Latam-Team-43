@@ -1,0 +1,30 @@
+# Tecnoteca con Docker: dos servicios (modelo Python + API Java).
+# Antes del primer arranque genera la semilla en el host:  ./run.bash configurar datos
+# Luego:  docker compose up --build   →  http://localhost:8080
+services:
+  modelo:
+    build:
+      context: .
+      dockerfile: Dockerfile.modelo
+    environment:
+      # En Docker la integración OCI queda apagada salvo que se configure una
+      # tenancy real (el emulador local es parte del flujo de run.bash):
+      #   OCI_ENABLED=true OCI_AUTH=config + montar ~/.oci en el contenedor
+      - OCI_ENABLED=${OCI_ENABLED:-false}
+      - OCI_AUTH=${OCI_AUTH:-config}
+      - OCI_ENDPOINT=${OCI_ENDPOINT:-}
+      - OCI_BUCKET=${OCI_BUCKET:-tecnoteca-artefactos}
+
+  api:
+    build: ./api
+    ports:
+      - "8080:8080"
+    environment:
+      - MODELO_URL=http://modelo:8001
+      - BD_RUTA=/app/data/tecnoteca-db
+      - SEMILLA_RUTA=/app/data/semilla_kb.csv
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      modelo:
+        condition: service_healthy
