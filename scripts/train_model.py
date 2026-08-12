@@ -13,7 +13,7 @@ from src.config import (
     TARGET_COLUMN,
     TEST_SIZE,
     RANDOM_STATE,
-    MODEL_PATH,
+    MODEL_PATH0,
     METRICS_PATH0,
     CONFUSION_MATRIX_PATH0
 )
@@ -50,7 +50,7 @@ def main():
     trainer = ModelTrainer(config)
 
     # ModelTrainer y ModelEvaluator trabajan con objetos Path.
-    model_path = Path(MODEL_PATH)
+    model_path = Path(MODEL_PATH0)
     metrics_path = Path(METRICS_PATH0)
     confusion_matrix_path = Path(CONFUSION_MATRIX_PATH0)
 
