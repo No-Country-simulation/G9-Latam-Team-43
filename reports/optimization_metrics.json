@@ -1,0 +1,12 @@
+{
+    "best_params": {
+        "model__C": 1,
+        "tfidf__max_df": 1.0,
+        "tfidf__ngram_range": [
+            1,
+            1
+        ]
+    },
+    "optimized_accuracy": 0.8205,
+    "classification_report": "                  precision    recall  f1-score   support\n\n         Backend       0.71      0.67      0.69       612\n  Bases de Datos       0.83      0.87      0.85       609\n  Ciberseguridad       0.79      0.78      0.78       625\n           Cloud       0.83      0.84      0.84       635\n    Data Science       0.94      0.94      0.94       591\nDesarrollo Movil       0.83      0.83      0.83       618\n        Frontend       0.63      0.65      0.64       567\n     Matematicas       0.91      0.93      0.92       576\n    QA y Testing       0.90      0.88      0.89       572\n           UX/UI       0.82      0.82      0.82       595\n\n        accuracy                           0.82      6000\n       macro avg       0.82      0.82      0.82      6000\n    weighted avg       0.82      0.82      0.82      6000\n"
+}
