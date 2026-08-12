@@ -13,14 +13,16 @@ techmind_model/
 │   └── dataset.csv             # Dataset de entrenamiento (CSV con columnas 'texto_completo' y 'categoria')
 │
 ├── models/
-│   └── pipeline_techmind.pkl   # Modelo entrenado persistido (artefacto serializado con Joblib)
+│   ├── pipeline_techmind.pkl   # Modelo entrenado persistido (artefacto serializado con Joblib)
+    └── optimize_pipeline_techmind.pkl   # Modelo optimizado entrenado persistido (artefacto serializado con Joblib)
 │
 ├── reports/
 │   ├── metrics.json            # Reporte de métricas de desempeño (Accuracy, Precision, Recall, F1)
-│   └── confusion_matrix.png    # Matriz de confusión visual en formato PNG
-│
+│   ├── confusion_matrix.png    # Matriz de confusión visual en formato PNG
+│   ├── optimize_metrics.json            # Reporte de métricas de desempeño (Accuracy, Precision, Recall, F1) de modelo optimizado
+│   └── optimize_confusion_matrix.png    # Matriz de confusión visual en formato PNG de modelo optimizado
+
 ├── src/                        # Código fuente modular
-│   ├── __init__.py             # Identificador de paquete Python
 │   ├── config.py               # Configuración global, constantes y rutas
 │   ├── text_cleaner.py         # Limpieza, normalización y preservación de jerga técnica (.NET, C#, React 18, etc.)
 │   ├── dataset_loader.py       # Carga, validación de esquema y preprocesamiento de datos
@@ -31,10 +33,10 @@ techmind_model/
 │   └── predictor.py            # Interfaz de inferencia para producción o consumo de API
 │
 ├── scripts/                    # Scripts de orquestación y flujo principal
-│   ├── __init__.py
 │   ├── train_model.py          # Entrenamiento base y exportación del pipeline
 │   ├── optimize_model.py       # Optimización por grilla de hiperparámetros y selección del mejor pipeline
 │   └── predict_text.py         # Script para probar inferencia con salida en formato JSON estricto
+│   └── optimze_predict_text.py # Script para probar inferencia optimizada con salida en formato JSON estricto
 │
 ├── requirements.txt            # Dependencias del entorno Python
 └── README.md                   # Documentación del proyecto
@@ -106,6 +108,12 @@ Para clasificar un nuevo texto desde la terminal:
 
 ```bash
 python -m scripts.predict_text
+```
+
+Para clasificar un nuevo texto desde la terminal utilizando modelo optimizado:
+
+```bash
+python -m scripts.optimze_predict_text
 ```
 
 **Uso programático en Python (con salida JSON estricta):**
