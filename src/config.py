@@ -14,8 +14,11 @@ MODEL_PATH = os.path.join(MODELS_DIR, 'pipeline_techmind.pkl')
 
 # Metrics saving path
 REPORTS_DIR = '/content/reports' # Changed from METRICS_DIR to REPORTS_DIR
+METRICS_PATH0 = os.path.join(REPORTS_DIR, 'metrics.json')
+CONFUSION_MATRIX_PATH0 = os.path.join(REPORTS_DIR, 'confusion_matrix.png')
+
 METRICS_PATH = os.path.join(REPORTS_DIR, 'optimization_metrics.json')
-CONFUSION_MATRIX_PATH = os.path.join(REPORTS_DIR, 'confusion_matrix.png')
+CONFUSION_MATRIX_PATH = os.path.join(REPORTS_DIR, 'optimization_confusion_matrix.png')
 
 # Ensure directories exist
 if not os.path.exists(MODELS_DIR):
