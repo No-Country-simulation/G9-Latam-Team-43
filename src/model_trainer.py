@@ -35,7 +35,7 @@ class ModelTrainer:
         self.model.fit(X_train_cleaned, y_train)
 
         # Save the trained model
-        joblib.dump(self.model, MODEL_PATH)
+         # joblib.dump(self.model, MODEL_PATH)
 
         # Evaluate model
         y_pred = self.model.predict(X_test_cleaned)

@@ -10,7 +10,9 @@ RANDOM_STATE = 42
 
 # Model saving path
 MODELS_DIR = '/content/models'
-MODEL_PATH = os.path.join(MODELS_DIR, 'pipeline_techmind.pkl')
+MODEL_PATH0 = os.path.join(MODELS_DIR, 'pipeline_techmind.pkl')
+MODEL_PATH = os.path.join(MODELS_DIR, 'optimized_pipeline_techmind.pkl')
+
 
 # Metrics saving path
 REPORTS_DIR = '/content/reports' # Changed from METRICS_DIR to REPORTS_DIR
